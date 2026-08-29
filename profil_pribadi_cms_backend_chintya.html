@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chintya - Creative Portfolio & CMS Admin</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                    },
+                    colors: {
+                        pastel: {
+                            50: '#fff5f7',
+                            100: '#ffe4e9',
+                            200: '#fcccd6',
+                            300: '#f9a8ba',
+                            400: '#f472b6',
+                            500: '#ec4899',
+                            600: '#db2777',
+                            softBg: '#fffafb',
+                            cardBg: '#ffffff',
+                            textDark: '#3a2e35',
+                            textMuted: '#7c6873',
+                        }
+                    },
+                    boxShadow: {
+                        'pastel-glow': '0 10px 30px -10px rgba(244, 114, 182, 0.3)',
+                        'pastel-card': '0 10px 30px rgba(236, 72, 153, 0.06)',
+                        'pastel-hover': '0 18px 35px rgba(236, 72, 153, 0.12)',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #fff8f9;
+            color: #3a2e35;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 5rem;
+        }
+
+        .glass-sticky-nav {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            transition: all 0.3s ease;
+        }
+
+        .glass-sticky-nav.scrolled {
+            background: rgba(255, 255, 255, 0.96);
+            box-shadow: 0 10px 25px -5px rgba(236, 72, 153, 0.15);
+            padding-top: 0.25rem;
+            padding-bottom: 0.25rem;
+        }
+
+        .nav-link.active {
+            color: #db2777;
+            background-color: #ffe4e9;
+            font-weight: 700;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(252, 204, 214, 0.6);
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(70px);
+            z-index: -1;
+            opacity: 0.55;
+            animation: float 9s ease-in-out infinite alternate;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) scale(1); }
+            100% { transform: translateY(-25px) scale(1.06); }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fff5f7;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #f9a8ba;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #f472b6;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden selection:bg-pastel-200 selection:text-pastel-600">
+
+    <div class="blob w-96 h-96 bg-pastel-100 top-10 -left-20"></div>
+    <div class="blob w-96 h-96 bg-pink-100 top-1/3 -right-20" style="animation-delay: 2s;"></div>
+    <div class="blob w-[30rem] h-[30rem] bg-rose-100 bottom-1/4 left-10" style="animation-delay: 4s;"></div>
+
+    <header class="sticky top-0 z-40 transition-all duration-300 glass-sticky-nav border-b border-pastel-100 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
+            <a href="#hero" class="text-xl font-extrabold tracking-wider text-pastel-600 flex items-center gap-2.5 group">
+                <span class="w-9 h-9 rounded-2xl bg-gradient-to-tr from-pastel-400 to-pastel-300 text-white flex items-center justify-center font-black text-base shadow-sm transition-transform duration-300 group-hover:rotate-6">C</span>
+                <span class="font-bold" id="brand-name-display">Chintya<span class="text-pastel-400">.</span></span>
+            </a>
+
+            <nav class="hidden lg:flex items-center space-x-1 xl:space-x-2 text-xs font-semibold text-pastel-textDark">
+                <a href="#hero" class="nav-link px-3.5 py-2 rounded-xl hover:bg-pastel-50 hover:text-pastel-600 transition-all active">Beranda</a>
+                <a href="#about" class="nav-link px-3.5 py-2 rounded-xl hover:bg-pastel-50 hover:text-pastel-600 transition-all">Tentang Saya</a>
+                <a href="#hobbies" class="nav-link px-3.5 py-2 rounded-xl hover:bg-pastel-50 hover:text-pastel-600 transition-all">Hobi</a>
+                <a href="#portfolio" class="nav-link px-3.5 py-2 rounded-xl hover:bg-pastel-50 hover:text-pastel-600 transition-all">Portfolio</a>
+                <a href="#education" class="nav-link px-3.5 py-2 rounded-xl hover:bg-pastel-50 hover:text-pastel-600 transition-all">Pendidikan</a>
+                <a href="#experience" class="nav-link px-3.5 py-2 rounded-xl hover:bg-pastel-50 hover:text-pastel-600 transition-all">Pengalaman</a>
+                <a href="#blog" class="nav-link px-3.5 py-2 rounded-xl hover:bg-pastel-50 hover:text-pastel-600 transition-all">Blog</a>
+                <a href="#contact" class="nav-link px-3.5 py-2 rounded-xl hover:bg-pastel-50 hover:text-pastel-600 transition-all">Kontak</a>
+            </nav>
+
+            <div class="hidden lg:flex items-center gap-2">
+                <button onclick="toggleAdminView()" id="admin-trigger-btn" class="px-4 py-2 bg-stone-900 hover:bg-stone-800 text-white text-xs font-semibold rounded-full shadow-sm transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-lock text-xs text-amber-400"></i>
+                    <span id="admin-btn-label">Login Admin</span>
+                </button>
+                <a href="#contact" class="px-5 py-2 bg-gradient-to-r from-pastel-400 to-pastel-500 hover:from-pastel-500 hover:to-pastel-600 text-white font-semibold text-xs rounded-full shadow-pastel-glow transition-all duration-300 hover:scale-105 inline-flex items-center gap-2">
+                    <i class="fa-solid fa-paper-plane text-xs"></i>
+                    <span>Hubungi</span>
+                </a>
+            </div>
+
+            <button id="menu-btn" aria-label="Menu" class="lg:hidden text-pastel-textDark hover:text-pastel-500 focus:outline-none p-2 rounded-xl bg-pastel-50">
+                <i class="fa-solid fa-bars-staggered text-lg"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden lg:hidden glass-card border-t border-pastel-100 px-6 py-5 flex flex-col space-y-2 text-center text-sm font-semibold">
+            <a href="#hero" class="mobile-link nav-link text-pastel-textDark hover:text-pastel-500 py-2 rounded-lg hover:bg-pastel-50 active">Beranda</a>
+            <a href="#about" class="mobile-link nav-link text-pastel-textDark hover:text-pastel-500 py-2 rounded-lg hover:bg-pastel-50">Tentang Saya</a>
+            <a href="#hobbies" class="mobile-link nav-link text-pastel-textDark hover:text-pastel-500 py-2 rounded-lg hover:bg-pastel-50">Hobi</a>
+            <a href="#portfolio" class="mobile-link nav-link text-pastel-textDark hover:text-pastel-500 py-2 rounded-lg hover:bg-pastel-50">Portfolio</a>
+            <a href="#education" class="mobile-link nav-link text-pastel-textDark hover:text-pastel-500 py-2 rounded-lg hover:bg-pastel-50">Pendidikan</a>
+            <a href="#experience" class="mobile-link nav-link text-pastel-textDark hover:text-pastel-500 py-2 rounded-lg hover:bg-pastel-50">Pengalaman</a>
+            <a href="#blog" class="mobile-link nav-link text-pastel-textDark hover:text-pastel-500 py-2 rounded-lg hover:bg-pastel-50">Blog</a>
+            <a href="#contact" class="mobile-link nav-link text-pastel-textDark hover:text-pastel-500 py-2 rounded-lg hover:bg-pastel-50">Kontak</a>
+            <button onclick="toggleAdminView()" class="w-full py-2.5 bg-stone-900 text-white rounded-full font-semibold text-xs flex items-center justify-center gap-2 my-1">
+                <i class="fa-solid fa-lock text-amber-400"></i>
+                <span id="mobile-admin-label">Login Admin Backend</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="space-y-16 py-8">
+        <section id="hero" class="max-w-7xl mx-auto px-4 sm:px-6 pt-4">
+            <div class="bg-gradient-to-br from-white via-pastel-50/70 to-pink-50/40 rounded-3xl p-8 sm:p-12 lg:p-14 border border-pastel-100 shadow-pastel-card relative overflow-hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                    
+                    <div class="lg:col-span-7 text-center lg:text-left">
+                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white text-pastel-600 text-xs font-bold tracking-wide mb-6 shadow-sm border border-pastel-200">
+                            <span class="w-2.5 h-2.5 rounded-full bg-pastel-500 animate-ping"></span>
+                            <span id="hero-badge">Tersedia untuk Freelance & Proyek Desain</span>
+                        </div>
+
+                        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-pastel-textDark leading-tight mb-4">
+                            Halo, Saya <br class="hidden sm:inline">
+                            <span id="hero-name" class="bg-gradient-to-r from-pastel-400 via-pastel-500 to-pastel-600 bg-clip-text text-transparent">
+                                Chintya ✨
+                            </span>
+                        </h1>
+
+                        <p id="hero-title" class="text-base sm:text-xl font-medium text-pastel-textMuted mb-6">
+                            UI/UX Designer & Creative Front-End Developer
+                        </p>
+
+                        <p id="hero-bio" class="text-xs sm:text-sm text-pastel-textMuted leading-relaxed max-w-xl mx-auto lg:mx-0 mb-8">
+                            Menggabungkan keindahan warna pastel yang tenang dengan fungsionalitas teknologi modern. Berfokus menyajikan antarmuka pengguna yang bersih, responsif, serta menyenangkan.
+                        </p>
+
+                        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3">
+                            <a href="#portfolio" class="px-6 py-3 bg-pastel-500 hover:bg-pastel-600 text-white font-semibold text-xs sm:text-sm rounded-full shadow-pastel-glow transition-all duration-300 hover:-translate-y-0.5 flex items-center gap-2">
+                                <span>Lihat Portfolio</span>
+                                <i class="fa-solid fa-arrow-down text-xs"></i>
+                            </a>
+                            <button onclick="copyToClipboard(appState.hero.email)" class="px-6 py-3 bg-white border border-pastel-200 text-pastel-textDark hover:border-pastel-400 hover:text-pastel-600 font-semibold text-xs sm:text-sm rounded-full shadow-sm transition-all duration-300 hover:-translate-y-0.5 flex items-center gap-2">
+                                <i class="fa-regular fa-envelope text-pastel-400"></i>
+                                <span>Salin Email</span>
+                            </button>
+                        </div>
+
+                        <div class="mt-8 pt-6 border-t border-pastel-100/80 flex items-center justify-center lg:justify-start gap-3">
+                            <span class="text-xs font-bold uppercase tracking-wider text-pastel-textMuted mr-2">Media Sosial:</span>
+                            <div id="social-links-container" class="flex gap-2"></div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-5 flex justify-center">
+                        <div class="relative w-64 sm:w-80">
+                            <div class="absolute inset-0 rounded-3xl bg-gradient-to-tr from-pastel-200 to-pastel-100 rotate-6 transform scale-105 shadow-pastel-card"></div>
+                            <div class="relative glass-card rounded-3xl p-4 shadow-xl border border-white">
+                                <img id="hero-avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRIqTiwrVVT91yryAwrH_vGA026ado2-IGRaFbQLsLvfRgWKaS7hLzDnU&s=10" 
+                                     alt="Chintya Profile" 
+                                     class="w-full h-80 object-cover rounded-2xl shadow-inner"
+                                     onerror="this.src='https://placehold.co/600x800/fcccd6/db2777?text=Chintya'">
+                                
+                                <div class="absolute -bottom-4 -left-4 bg-white/95 backdrop-blur px-4 py-2.5 rounded-2xl shadow-pastel-glow flex items-center gap-3 border border-pastel-100">
+                                    <div class="w-8 h-8 rounded-xl bg-pastel-100 text-pastel-600 flex items-center justify-center font-bold">
+                                        <i class="fa-solid fa-heart text-pastel-500 text-xs"></i>
+                                    </div>
+                                    <div>
+                                        <p id="badge1-title" class="text-xs font-bold text-pastel-textDark">4+ Tahun</p>
+                                        <p id="badge1-sub" class="text-[10px] text-pastel-textMuted">Pengalaman UI/UX</p>
+                                    </div>
+                                </div>
+
+                                <div class="absolute -top-3 -right-3 bg-white/95 backdrop-blur px-4 py-2.5 rounded-2xl shadow-pastel-card flex items-center gap-3 border border-pastel-100">
+                                    <div class="w-8 h-8 rounded-xl bg-pink-100 text-pastel-500 flex items-center justify-center">
+                                        <i class="fa-solid fa-circle-check text-xs"></i>
+                                    </div>
+                                    <div>
+                                        <p id="badge2-title" class="text-xs font-bold text-pastel-textDark">50+ Proyek</p>
+                                        <p id="badge2-sub" class="text-[10px] text-pastel-textMuted">Selesai Sempurna</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="max-w-7xl mx-auto px-4 sm:px-6 scroll-mt-24">
+            <div class="text-center mb-10">
+                <span class="text-xs font-bold text-pastel-500 uppercase tracking-widest bg-pastel-100 px-4 py-1.5 rounded-full">Profil & Biodata</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-pastel-textDark mt-3">Tentang Saya</h2>
+                <div class="w-12 h-1 bg-pastel-400 mx-auto mt-3 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="about-cards-container">
+                <!-- Dynamic About Cards -->
+            </div>
+        </section>
+
+        <section id="hobbies" class="max-w-7xl mx-auto px-4 sm:px-6 scroll-mt-24">
+            <div class="text-center mb-10">
+                <span class="text-xs font-bold text-pastel-500 uppercase tracking-widest bg-pastel-100 px-4 py-1.5 rounded-full">Kesenangan & Minat</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-pastel-textDark mt-3">Hobi Saya</h2>
+                <div class="w-12 h-1 bg-pastel-400 mx-auto mt-3 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="hobbies-cards-container">
+                <!-- Dynamic Hobbies Cards -->
+            </div>
+        </section>
+
+        <section id="portfolio" class="max-w-7xl mx-auto px-4 sm:px-6 scroll-mt-24">
+            <div class="text-center mb-10">
+                <span class="text-xs font-bold text-pastel-500 uppercase tracking-widest bg-pastel-100 px-4 py-1.5 rounded-full">Karya Terpilih</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-pastel-textDark mt-3">Portfolio Proyek</h2>
+                <div class="w-12 h-1 bg-pastel-400 mx-auto mt-3 rounded-full"></div>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-2 mb-8" id="portfolio-filters">
+                <button onclick="filterPortfolio('all')" class="filter-btn active px-4 py-2 rounded-full text-xs font-semibold transition-all bg-pastel-500 text-white shadow-pastel-glow" data-filter="all">Semua Proyek</button>
+                <button onclick="filterPortfolio('uiux')" class="filter-btn px-4 py-2 rounded-full text-xs font-semibold transition-all bg-white text-pastel-textMuted hover:text-pastel-600 border border-pastel-100" data-filter="uiux">UI/UX Design</button>
+                <button onclick="filterPortfolio('web')" class="filter-btn px-4 py-2 rounded-full text-xs font-semibold transition-all bg-white text-pastel-textMuted hover:text-pastel-600 border border-pastel-100" data-filter="web">Web Application</button>
+                <button onclick="filterPortfolio('branding')" class="filter-btn px-4 py-2 rounded-full text-xs font-semibold transition-all bg-white text-pastel-textMuted hover:text-pastel-600 border border-pastel-100" data-filter="branding">Branding</button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="portfolio-cards-container">
+                <!-- Dynamic Portfolio Cards -->
+            </div>
+        </section>
+
+        <section id="education" class="max-w-7xl mx-auto px-4 sm:px-6 scroll-mt-24">
+            <div class="text-center mb-10">
+                <span class="text-xs font-bold text-pastel-500 uppercase tracking-widest bg-pastel-100 px-4 py-1.5 rounded-full">Latar Belakang</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-pastel-textDark mt-3">Pendidikan & Sertifikasi</h2>
+                <div class="w-12 h-1 bg-pastel-400 mx-auto mt-3 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="education-cards-container">
+                <!-- Dynamic Education Cards -->
+            </div>
+        </section>
+
+        <section id="experience" class="max-w-7xl mx-auto px-4 sm:px-6 scroll-mt-24">
+            <div class="text-center mb-10">
+                <span class="text-xs font-bold text-pastel-500 uppercase tracking-widest bg-pastel-100 px-4 py-1.5 rounded-full">Jejak Karir</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-pastel-textDark mt-3">Pengalaman Kerja</h2>
+                <div class="w-12 h-1 bg-pastel-400 mx-auto mt-3 rounded-full"></div>
+            </div>
+
+            <div class="space-y-6" id="experience-cards-container">
+                <!-- Dynamic Experience Cards -->
+            </div>
+        </section>
+
+        <section id="blog" class="max-w-7xl mx-auto px-4 sm:px-6 scroll-mt-24">
+            <div class="text-center mb-10">
+                <span class="text-xs font-bold text-pastel-500 uppercase tracking-widest bg-pastel-100 px-4 py-1.5 rounded-full">Tulisan & Catatan</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-pastel-textDark mt-3">Blog & Artikel</h2>
+                <div class="w-12 h-1 bg-pastel-400 mx-auto mt-3 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="blog-cards-container">
+                <!-- Dynamic Blog Cards -->
+            </div>
+        </section>
+
+        <section id="contact" class="max-w-7xl mx-auto px-4 sm:px-6 scroll-mt-24">
+            <div class="bg-gradient-to-r from-pastel-100 via-rose-50 to-pastel-100 rounded-3xl p-8 sm:p-12 border border-pastel-200 shadow-pastel-glow relative overflow-hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    
+                    <div class="lg:col-span-5 space-y-6">
+                        <div>
+                            <span class="text-xs font-bold text-pastel-600 uppercase tracking-widest bg-white px-3.5 py-1.5 rounded-full shadow-sm">Mari Terhubung</span>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-pastel-textDark mt-3">Ingin Berdiskusi?</h2>
+                            <p class="text-xs text-pastel-textMuted mt-2 leading-relaxed">
+                                Kirimkan pesan atau ajukan ide proyek Anda. Saya siap membantu menciptakan desain impian Anda.
+                            </p>
+                        </div>
+
+                        <div class="space-y-3">
+                            <div class="p-4 bg-white/90 rounded-2xl border border-pastel-100 flex items-center gap-4 shadow-sm">
+                                <div class="w-10 h-10 rounded-xl bg-pastel-100 text-pastel-500 flex items-center justify-center text-base">
+                                    <i class="fa-regular fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] text-pastel-textMuted font-semibold uppercase">Email Direct</p>
+                                    <p id="contact-email-display" class="text-xs font-bold text-pastel-textDark">chintya@example.com</p>
+                                </div>
+                            </div>
+
+                            <div class="p-4 bg-white/90 rounded-2xl border border-pastel-100 flex items-center gap-4 shadow-sm">
+                                <div class="w-10 h-10 rounded-xl bg-pastel-100 text-pastel-500 flex items-center justify-center text-base">
+                                    <i class="fa-brands fa-whatsapp"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] text-pastel-textMuted font-semibold uppercase">WhatsApp</p>
+                                    <p id="contact-phone-display" class="text-xs font-bold text-pastel-textDark">+62 812 3456 7890</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-7 bg-white p-7 sm:p-8 rounded-3xl border border-pastel-100 shadow-lg">
+                        <form id="contact-form" onsubmit="handleFormSubmit(event)" class="space-y-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-pastel-textDark mb-1.5">Nama Anda</label>
+                                    <input type="text" id="msg-sender" required placeholder="Nama Lengkap" class="w-full px-4 py-3 rounded-2xl bg-pastel-50/50 border border-pastel-100 text-xs font-medium focus:outline-none focus:border-pastel-400 focus:bg-white transition-all">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-pastel-textDark mb-1.5">Alamat Email</label>
+                                    <input type="email" id="msg-email" required placeholder="email@domain.com" class="w-full px-4 py-3 rounded-2xl bg-pastel-50/50 border border-pastel-100 text-xs font-medium focus:outline-none focus:border-pastel-400 focus:bg-white transition-all">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-pastel-textDark mb-1.5">Subjek</label>
+                                <input type="text" id="msg-subject" required placeholder="Topik atau Nama Proyek" class="w-full px-4 py-3 rounded-2xl bg-pastel-50/50 border border-pastel-100 text-xs font-medium focus:outline-none focus:border-pastel-400 focus:bg-white transition-all">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-pastel-textDark mb-1.5">Pesan</label>
+                                <textarea id="msg-content" rows="3" required placeholder="Tuliskan detail pesan Anda..." class="w-full px-4 py-3 rounded-2xl bg-pastel-50/50 border border-pastel-100 text-xs font-medium focus:outline-none focus:border-pastel-400 focus:bg-white transition-all resize-none"></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-pastel-400 to-pastel-500 hover:from-pastel-500 hover:to-pastel-600 text-white font-bold text-xs uppercase tracking-wider rounded-2xl shadow-pastel-glow transition-all duration-300 hover:scale-[1.01]">
+                                Kirim Pesan ✨
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-white border-t border-pastel-100 py-10 px-6 mt-16">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+            <div>
+                <a href="#hero" class="text-lg font-extrabold tracking-wider text-pastel-600 inline-flex items-center gap-2 mb-1">
+                    <span class="w-7 h-7 rounded-xl bg-gradient-to-tr from-pastel-400 to-pastel-300 text-white flex items-center justify-center font-black text-xs">C</span>
+                    <span>Chintya<span class="text-pastel-400">.</span></span>
+                </a>
+                <p class="text-xs text-pastel-textMuted mt-0.5">© 2026 Chintya. Managed via Modern CMS Panel.</p>
+            </div>
+
+            <div id="footer-socials" class="flex items-center gap-3"></div>
+
+            <div class="flex items-center gap-3">
+                <button onclick="toggleAdminView()" class="text-xs font-bold text-stone-700 bg-stone-100 hover:bg-stone-200 px-3.5 py-2 rounded-xl transition-all border border-stone-200 flex items-center gap-1.5">
+                    <i class="fa-solid fa-user-shield text-amber-500"></i>
+                    <span>CMS Panel</span>
+                </button>
+                <a href="#hero" class="w-10 h-10 rounded-2xl bg-pastel-50 text-pastel-500 hover:bg-pastel-400 hover:text-white flex items-center justify-center transition-all duration-300 hover:scale-105 shadow-sm text-xs" title="Kembali ke atas">
+                    <i class="fa-solid fa-arrow-up"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Project Detail Modal -->
+    <div id="project-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 border border-pastel-100 shadow-2xl transform scale-95 transition-transform duration-300 relative" id="modal-content">
+            <button onclick="closeModal('project-modal')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-pastel-50 text-pastel-500 hover:bg-pastel-200 flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark text-sm"></i>
+            </button>
+
+            <img id="modal-img" src="" alt="Preview" class="w-full h-44 object-cover rounded-2xl mb-4 border border-pastel-100">
+            <span id="modal-category" class="text-[10px] font-bold text-pastel-500 bg-pastel-50 px-2.5 py-1 rounded-md uppercase tracking-wider"></span>
+            <h3 id="modal-title" class="text-lg font-bold text-pastel-textDark my-2"></h3>
+            <p id="modal-desc" class="text-xs text-pastel-textMuted leading-relaxed mb-5"></p>
+
+            <div class="flex items-center justify-between gap-3">
+                <a id="modal-link-btn" href="#" target="_blank" class="px-5 py-2.5 bg-pastel-500 hover:bg-pastel-600 text-white rounded-full text-xs font-semibold transition-colors flex items-center gap-2 shadow-pastel-glow">
+                    <span>Kunjungi Link Proyek</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                </a>
+                <button onclick="closeModal('project-modal')" class="px-5 py-2.5 bg-pastel-100 text-pastel-600 rounded-full text-xs font-semibold hover:bg-pastel-200 transition-colors">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Blog Detail Modal -->
+    <div id="blog-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 border border-pastel-100 shadow-2xl transform scale-95 transition-transform duration-300 relative" id="blog-modal-content">
+            <button onclick="closeModal('blog-modal')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-pastel-50 text-pastel-500 hover:bg-pastel-200 flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark text-sm"></i>
+            </button>
+
+            <span id="blog-modal-cat" class="text-[10px] font-bold text-pastel-500 uppercase tracking-widest bg-pastel-50 px-2.5 py-1 rounded-md inline-block mb-3">Artikel Blog</span>
+            <h3 id="blog-modal-title" class="text-lg font-bold text-pastel-textDark mb-3"></h3>
+            <div id="blog-modal-desc" class="text-xs text-pastel-textMuted leading-relaxed mb-6 space-y-2"></div>
+
+            <div class="flex justify-end">
+                <button onclick="closeModal('blog-modal')" class="px-5 py-2 bg-pastel-500 text-white rounded-full text-xs font-semibold hover:bg-pastel-600 transition-colors shadow-pastel-glow">Selesai Membaca</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div id="admin-login-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-900/60 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-7 border border-stone-200 shadow-2xl relative transform scale-95 transition-transform duration-300">
+            <button onclick="closeModal('admin-login-modal')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-stone-100 text-stone-500 hover:bg-stone-200 flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark text-sm"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl mx-auto mb-3 shadow-inner">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h3 class="text-lg font-extrabold text-stone-800">Login Admin Backend</h3>
+                <p class="text-xs text-stone-500 mt-1">Masukkan kredensial keamanan untuk mengelola konten website.</p>
+            </div>
+
+            <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-stone-700 mb-1">Username</label>
+                    <input type="text" id="admin-username" required placeholder="Username admin" class="w-full px-4 py-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs font-medium focus:outline-none focus:border-amber-500 focus:bg-white transition-all">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-stone-700 mb-1">Password</label>
+                    <input type="password" id="admin-password" required placeholder="Password" class="w-full px-4 py-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs font-medium focus:outline-none focus:border-amber-500 focus:bg-white transition-all">
+                </div>
+
+                
+                
+                
+            
+
+                <button type="submit" class="w-full py-3 bg-stone-900 hover:bg-stone-800 text-amber-400 font-bold text-xs uppercase tracking-wider rounded-xl shadow-lg transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    <span>Masuk ke Dashboard</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Fullscreen Admin CMS Dashboard -->
+    <div id="admin-dashboard-modal" class="fixed inset-0 z-50 bg-stone-950/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-2 sm:p-6 overflow-y-auto">
+        <div class="bg-stone-900 text-stone-100 rounded-3xl max-w-6xl w-full h-[90vh] border border-stone-800 shadow-2xl flex flex-col overflow-hidden relative">
+            
+            <!-- Dashboard Header -->
+            <div class="px-6 py-4 border-b border-stone-800 flex items-center justify-between bg-stone-900/90">
+                <div class="flex items-center gap-3">
+                    <span class="w-9 h-9 rounded-xl bg-amber-500 text-stone-950 flex items-center justify-center font-black text-sm">
+                        <i class="fa-solid fa-sliders"></i>
+                    </span>
+                    <div>
+                        <h2 class="text-base font-bold text-white flex items-center gap-2">
+                            <span>CMS Content Manager</span>
+                            <span class="text-[10px] bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded-full uppercase tracking-wider">Admin Logged In</span>
+                        </h2>
+                        <p class="text-[11px] text-stone-400">Kelola teks, kartu portofolio, tautan link, dan kiriman pesan</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <button onclick="resetDataToDefault()" class="px-3 py-1.5 bg-stone-800 hover:bg-stone-700 text-stone-300 rounded-xl text-xs font-semibold border border-stone-700 transition-colors flex items-center gap-1.5" title="Reset Data">
+                        <i class="fa-solid fa-rotate-left text-xs"></i>
+                        <span class="hidden sm:inline">Reset Default</span>
+                    </button>
+                    <button onclick="handleAdminLogout()" class="px-3.5 py-1.5 bg-rose-600/20 hover:bg-rose-600 text-rose-300 hover:text-white rounded-xl text-xs font-semibold border border-rose-500/30 transition-colors flex items-center gap-1.5">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span>Keluar</span>
+                    </button>
+                    <button onclick="closeModal('admin-dashboard-modal')" class="w-8 h-8 rounded-xl bg-stone-800 text-stone-400 hover:text-white flex items-center justify-center">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dashboard Navigation Tabs -->
+            <div class="px-6 py-2.5 bg-stone-950 border-b border-stone-800 flex items-center gap-2 overflow-x-auto text-xs font-semibold scrollbar-none">
+                <button onclick="switchAdminTab('hero')" class="cms-tab active px-4 py-2 rounded-xl bg-amber-500 text-stone-950 transition-all flex items-center gap-2 whitespace-nowrap" data-tab="hero">
+                    <i class="fa-solid fa-user-gear"></i>
+                    <span>Profil & Hero</span>
+                </button>
+                <button onclick="switchAdminTab('portfolio')" class="cms-tab px-4 py-2 rounded-xl bg-stone-800 text-stone-300 hover:bg-stone-700 transition-all flex items-center gap-2 whitespace-nowrap" data-tab="portfolio">
+                    <i class="fa-solid fa-briefcase"></i>
+                    <span>Portfolio Proyek</span>
+                </button>
+                <button onclick="switchAdminTab('hobbies')" class="cms-tab px-4 py-2 rounded-xl bg-stone-800 text-stone-300 hover:bg-stone-700 transition-all flex items-center gap-2 whitespace-nowrap" data-tab="hobbies">
+                    <i class="fa-solid fa-icons"></i>
+                    <span>Hobi</span>
+                </button>
+                <button onclick="switchAdminTab('blog')" class="cms-tab px-4 py-2 rounded-xl bg-stone-800 text-stone-300 hover:bg-stone-700 transition-all flex items-center gap-2 whitespace-nowrap" data-tab="blog">
+                    <i class="fa-solid fa-newspaper"></i>
+                    <span>Blog & Artikel</span>
+                </button>
+                <button onclick="switchAdminTab('education')" class="cms-tab px-4 py-2 rounded-xl bg-stone-800 text-stone-300 hover:bg-stone-700 transition-all flex items-center gap-2 whitespace-nowrap" data-tab="education">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Pendidikan & Karir</span>
+                </button>
+                <button onclick="switchAdminTab('inbox')" class="cms-tab px-4 py-2 rounded-xl bg-stone-800 text-stone-300 hover:bg-stone-700 transition-all flex items-center gap-2 whitespace-nowrap" data-tab="inbox">
+                    <i class="fa-solid fa-inbox"></i>
+                    <span>Inbox Pesan (<span id="inbox-count">0</span>)</span>
+                </button>
+            </div>
+
+            <!-- Dashboard Tab Contents -->
+            <div class="p-6 overflow-y-auto flex-1 text-xs space-y-6">
+                
+                <!-- Tab 1: Hero & Profile Manager -->
+                <div id="cms-tab-hero" class="cms-content space-y-6">
+                    <form onsubmit="saveHeroData(event)" class="space-y-5 bg-stone-900/60 p-6 rounded-2xl border border-stone-800">
+                        <h4 class="text-sm font-bold text-amber-400 border-b border-stone-800 pb-2">Edit Teks Profil Utama</h4>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-stone-400 mb-1">Nama Tampilan</label>
+                                <input type="text" id="cms-hero-name" class="w-full px-3.5 py-2 rounded-xl bg-stone-950 border border-stone-800 text-white font-medium focus:border-amber-500 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-stone-400 mb-1">Profesi / Title</label>
+                                <input type="text" id="cms-hero-title" class="w-full px-3.5 py-2 rounded-xl bg-stone-950 border border-stone-800 text-white font-medium focus:border-amber-500 focus:outline-none">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-stone-400 mb-1">Status Badge Top</label>
+                            <input type="text" id="cms-hero-badge" class="w-full px-3.5 py-2 rounded-xl bg-stone-950 border border-stone-800 text-white font-medium focus:border-amber-500 focus:outline-none">
+                        </div>
+
+                        <div>
+                            <label class="block text-stone-400 mb-1">Bio / Deskripsi Singkat</label>
+                            <textarea id="cms-hero-bio" rows="3" class="w-full px-3.5 py-2 rounded-xl bg-stone-950 border border-stone-800 text-white font-medium focus:border-amber-500 focus:outline-none resize-none"></textarea>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-stone-400 mb-1">URL Foto Profil</label>
+                                <input type="text" id="cms-hero-avatar" class="w-full px-3.5 py-2 rounded-xl bg-stone-950 border border-stone-800 text-white font-medium focus:border-amber-500 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-stone-400 mb-1">Email Kontak Direct</label>
+                                <input type="text" id="cms-hero-email" class="w-full px-3.5 py-2 rounded-xl bg-stone-950 border border-stone-800 text-white font-medium focus:border-amber-500 focus:outline-none">
+                            </div>
+                        </div>
+
+                        <h4 class="text-sm font-bold text-amber-400 border-b border-stone-800 pb-2 pt-2">Link Tautan Media Sosial</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-stone-400 mb-1"><i class="fa-brands fa-instagram text-pink-400 mr-1"></i> Instagram Link</label>
+                                <input type="text" id="cms-social-instagram" class="w-full px-3.5 py-2 rounded-xl bg-stone-950 border border-stone-800 text-white font-medium focus:border-amber-500 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-stone-400 mb-1"><i class="fa-brands fa-linkedin text-blue-400 mr-1"></i> LinkedIn Link</label>
+                                <input type="text" id="cms-social-linkedin" class="w-full px-3.5 py-2 rounded-xl bg-stone-950 border border-stone-800 text-white font-medium focus:border-amber-500 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-stone-400 mb-1"><i class="fa-brands fa-github text-white mr-1"></i> GitHub Link</label>
+                                <input type="text" id="cms-social-github" class="w-full px-3.5 py-2 rounded-xl bg-stone-950 border border-stone-800 text-white font-medium focus:border-amber-500 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-stone-400 mb-1"><i class="fa-brands fa-dribbble text-pink-500 mr-1"></i> Dribbble Link</label>
+                                <input type="text" id="cms-social-dribbble" class="w-full px-3.5 py-2 rounded-xl bg-stone-950 border border-stone-800 text-white font-medium focus:border-amber-500 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-stone-400 mb-1"><i class="fa-brands fa-tiktok text-teal-400 mr-1"></i> TikTok Link</label>
+                                <input type="text" id="cms-social-tiktok" class="w-full px-3.5 py-2 rounded-xl bg-stone-950 border border-stone-800 text-white font-medium focus:border-amber-500 focus:outline-none">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="px-6 py-2.5 bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold rounded-xl shadow-lg transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-floppy-disk"></i>
+                            <span>Simpan Perubahan Profil</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Tab 2: Portfolio CMS Manager -->
+                <div id="cms-tab-portfolio" class="cms-content hidden space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h4 class="text-sm font-bold text-amber-400">Daftar Kartu Portofolio & Link</h4>
+                        <button onclick="openPortfolioModal()" class="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold rounded-xl text-xs flex items-center gap-2">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Tambah Kartu Proyek</span>
+                        </button>
+                    </div>
+
+                    <div id="cms-portfolio-list" class="space-y-3"></div>
+                </div>
+
+                <!-- Tab 3: Hobbies CMS Manager -->
+                <div id="cms-tab-hobbies" class="cms-content hidden space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h4 class="text-sm font-bold text-amber-400">Daftar Kartu Hobi</h4>
+                        <button onclick="openHobbyModal()" class="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold rounded-xl text-xs flex items-center gap-2">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Tambah Kartu Hobi</span>
+                        </button>
+                    </div>
+
+                    <div id="cms-hobbies-list" class="space-y-3"></div>
+                </div>
+
+                <!-- Tab 4: Blog CMS Manager -->
+                <div id="cms-tab-blog" class="cms-content hidden space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h4 class="text-sm font-bold text-amber-400">Daftar Artikel Blog</h4>
+                        <button onclick="openBlogItemModal()" class="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold rounded-xl text-xs flex items-center gap-2">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Tambah Artikel Baru</span>
+                        </button>
+                    </div>
+
+                    <div id="cms-blog-list" class="space-y-3"></div>
+                </div>
+
+                <!-- Tab 5: Education & Experience Manager -->
+                <div id="cms-tab-education" class="cms-content hidden space-y-6">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="text-sm font-bold text-amber-400">Daftar Pengalaman Kerja</h4>
+                            <button onclick="openExperienceModal()" class="px-3.5 py-1.5 bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold rounded-xl text-xs flex items-center gap-1.5">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>Tambah Karir</span>
+                            </button>
+                        </div>
+                        <div id="cms-experience-list" class="space-y-3"></div>
+                    </div>
+
+                    <div class="pt-4 border-t border-stone-800">
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="text-sm font-bold text-amber-400">Daftar Pendidikan & Sertifikasi</h4>
+                            <button onclick="openEducationModal()" class="px-3.5 py-1.5 bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold rounded-xl text-xs flex items-center gap-1.5">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>Tambah Pendidikan</span>
+                            </button>
+                        </div>
+                        <div id="cms-education-list" class="space-y-3"></div>
+                    </div>
+                </div>
+
+                <!-- Tab 6: Inbox Messages -->
+                <div id="cms-tab-inbox" class="cms-content hidden space-y-4">
+                    <h4 class="text-sm font-bold text-amber-400">Pesan Masuk dari Pengunjung</h4>
+                    <div id="cms-inbox-list" class="space-y-3"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Item Form Modal (Shared for Portfolio/Hobby/Blog CRUD) -->
+    <div id="cms-item-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4">
+        <div class="bg-stone-900 text-stone-100 rounded-3xl max-w-lg w-full p-6 border border-stone-800 shadow-2xl relative">
+            <button onclick="closeModal('cms-item-modal')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-stone-800 text-stone-400 hover:text-white flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h3 id="cms-item-modal-title" class="text-base font-bold text-amber-400 mb-4 border-b border-stone-800 pb-2">Form Item</h3>
+
+            <form id="cms-item-form" onsubmit="handleItemFormSave(event)" class="space-y-3 text-xs">
+                <input type="hidden" id="form-item-type">
+                <input type="hidden" id="form-item-id">
+
+                <div>
+                    <label class="block text-stone-400 mb-1">Judul / Nama</label>
+                    <input type="text" id="form-item-title" required class="w-full px-3.5 py-2 rounded-xl bg-stone-950 border border-stone-800 text-white focus:border-amber-500 focus:outline-none">
+                </div>
+
+                <div id="form-field-category">
+                    <label class="block text-stone-400 mb-1">Kategori / Sub-judul</label>
+                    <input type="text" id="form-item-category" class="w-full px-3.5 py-2 rounded-xl bg-stone-950 border border-stone-800 text-white focus:border-amber-500 focus:outline-none">
+                </div>
+
+                <div id="form-field-link">
+                    <label class="block text-stone-400 mb-1">Target Link / URL Tautan Kartu (misal: https://...)</label>
+                    <input type="text" id="form-item-link" placeholder="https://example.com/proyek-anda" class="w-full px-3.5 py-2 rounded-xl bg-stone-950 border border-stone-800 text-amber-300 font-mono focus:border-amber-500 focus:outline-none">
+                </div>
+
+                <div id="form-field-image">
+                    <label class="block text-stone-400 mb-1">URL Gambar Kartu</label>
+                    <input type="text" id="form-item-image" class="w-full px-3.5 py-2 rounded-xl bg-stone-950 border border-stone-800 text-white focus:border-amber-500 focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-stone-400 mb-1">Deskripsi / Konten</label>
+                    <textarea id="form-item-desc" rows="3" required class="w-full px-3.5 py-2 rounded-xl bg-stone-950 border border-stone-800 text-white focus:border-amber-500 focus:outline-none resize-none"></textarea>
+                </div>
+
+                <div id="form-field-tags">
+                    <label class="block text-stone-400 mb-1">Tag / Skill (Pisahkan dengan koma)</label>
+                    <input type="text" id="form-item-tags" placeholder="Figma, UI/UX, Design" class="w-full px-3.5 py-2 rounded-xl bg-stone-950 border border-stone-800 text-white focus:border-amber-500 focus:outline-none">
+                </div>
+
+                <div class="pt-3 flex justify-end gap-2">
+                    <button type="button" onclick="closeModal('cms-item-modal')" class="px-4 py-2 bg-stone-800 hover:bg-stone-700 text-stone-300 rounded-xl font-semibold">Batal</button>
+                    <button type="submit" class="px-5 py-2 bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold rounded-xl shadow-lg">Simpan Kartu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Custom Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 px-5 py-3 rounded-2xl bg-stone-900 text-white text-xs font-semibold shadow-2xl border border-stone-700 opacity-0 pointer-events-none transition-all duration-300 transform translate-y-4 flex items-center gap-2">
+        <i class="fa-solid fa-circle-check text-amber-400" id="toast-icon"></i>
+        <span id="toast-msg">Notifikasi berhasil!</span>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global Firebase state reference
+        window.firebaseApp = null;
+        window.firebaseDb = null;
+        window.firebaseAuth = null;
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'chintya-portfolio-app';
+
+        async function initFirebaseSync() {
+            try {
+                if (typeof __firebase_config !== 'undefined') {
+                    const firebaseConfig = JSON.parse(__firebase_config);
+                    window.firebaseApp = initializeApp(firebaseConfig);
+                    window.firebaseDb = getFirestore(window.firebaseApp);
+                    window.firebaseAuth = getAuth(window.firebaseApp);
+
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        await signInWithCustomToken(window.firebaseAuth, __initial_auth_token);
+                    } else {
+                        await signInAnonymously(window.firebaseAuth);
+                    }
+
+                    // Listen to live database updates
+                    const docRef = doc(window.firebaseDb, 'artifacts', appId, 'public', 'data', 'portfolio_data', 'chintya');
+                    onSnapshot(docRef, (snapshot) => {
+                        if (snapshot.exists()) {
+                            const data = snapshot.data();
+                            if (data && data.state) {
+                                window.appState = data.state;
+                                renderFrontend();
+                                if (window.isAdminLoggedIn) renderAdminCMS();
+                            }
+                        } else {
+                            // Seed initial state if document doesn't exist
+                            saveStateToCloud();
+                        }
+                    }, (err) => {
+                        console.log('Firestore snapshot fallback:', err);
+                    });
+                }
+            } catch (err) {
+                console.log('Running in local state mode:', err);
+            }
+        }
+
+        window.saveStateToCloud = async function() {
+            if (window.firebaseDb) {
+                try {
+                    const docRef = doc(window.firebaseDb, 'artifacts', appId, 'public', 'data', 'portfolio_data', 'chintya');
+                    await setDoc(docRef, { state: window.appState });
+                } catch (e) {
+                    console.error('Error saving state to Firestore:', e);
+                }
+            }
+        };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initFirebaseSync();
+        });
+    </script>
+
+    <script>
+        // Default Master Data State
+        const defaultState = {
+            hero: {
+                name: "Chintya ✨",
+                title: "UI/UX Designer & Creative Front-End Developer",
+                badge: "Tersedia untuk Freelance & Proyek Desain",
+                bio: "Menggabungkan keindahan warna pastel yang tenang dengan fungsionalitas teknologi modern. Berfokus menyajikan antarmuka pengguna yang bersih, responsif, serta menyenangkan.",
+                avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRIqTiwrVVT91yryAwrH_vGA026ado2-IGRaFbQLsLvfRgWKaS7hLzDnU&s=10",
+                email: "chintya@example.com",
+                phone: "+62 812 3456 7890",
+                badge1: { title: "4+ Tahun", sub: "Pengalaman UI/UX" },
+                badge2: { title: "50+ Proyek", sub: "Selesai Sempurna" }
+            },
+            socials: {
+                instagram: "https://instagram.com",
+                linkedin: "https://linkedin.com",
+                github: "https://github.com",
+                dribbble: "https://dribbble.com",
+                tiktok: "https://tiktok.com"
+            },
+            about: [
+                { id: "ab1", title: "Siapa Chintya?", icon: "fa-user-astronaut", desc: "Seorang perancang antarmuka dan pengembang web yang sangat menyukai keindahan estetika soft pastel. Saya fokus mengubah kebutuhan bisnis menjadi desain produk digital yang mudah digunakan." },
+                { id: "ab2", title: "Informasi Utama", icon: "fa-id-card", desc: "Domisili: Jakarta, Indonesia\nBahasa: Indonesia, Inggris\nSpesialisasi: Mobile & Web UI/UX\nStatus: Siap untuk Proyek Baru" },
+                { id: "ab3", title: "Prinsip Kerja", icon: "fa-wand-magic-sparkles", desc: "\"Desain yang baik bukan hanya tentang bagaimana sesuatu terlihat, tetapi tentang bagaimana itu bekerja dan dirasakan oleh penggunanya.\"\nClean, Minimalist & User-Centric" }
+            ],
+            hobbies: [
+                { id: "hob1", title: "Menggambar & Digital Art", category: "Seni Visual", image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=800&q=80", desc: "Menjelajahi kreativitas melalui sketsa digital dan ilustrasi bertema soft pastel untuk mengasah kepekaan warna dan komposisi.", tags: "DigitalArt, Illustration, Sketching" },
+                { id: "hob2", title: "Membaca Komik & Webtoon", category: "Literasi Visual", image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80", desc: "Menemukan alur cerita visual yang imersif, tata letak panel yang dinamis, serta ekspresi karakter yang memberikan beragam ide visual.", tags: "Manga, Webtoon, Storytelling" },
+                { id: "hob3", title: "Menonton Anime", category: "Hiburan", image: "https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=800&q=80", desc: "Momen relaksasi sambil menikmati keindahan seni animasi, estetika warna sinematik, serta soundtrack musik anime favorit.", tags: "Anime, SliceOfLife, Cinematics" }
+            ],
+            portfolio: [
+                { id: "port1", title: "Bloom Skincare App", category: "uiux", categoryName: "UI/UX Design", image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80", desc: "Desain aplikasi mobile e-commerce produk kecantikan dengan fokus pada palet pastel yang menenangkan dan proses checkout ringkas.", link: "https://dribbble.com/shots/bloom-skincare-app", tags: "Figma, Mobile UI, E-Commerce" },
+                { id: "port2", title: "Sweet Bite Bakery", category: "web", categoryName: "Web Application", image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80", desc: "Landing page dan e-shop interaktif untuk toko kue kering serta pemesanan kue custom secara real-time.", link: "https://github.com/chintya/sweet-bite-web", tags: "Tailwind CSS, React, Web App" },
+                { id: "port3", title: "Rosea Boutique Brand", category: "branding", categoryName: "Branding", image: "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?auto=format&fit=crop&w=800&q=80", desc: "Perancangan identitas visual lengkap mulai dari logo, kartu nama, palet warna hingga templat media sosial.", link: "https://behance.net/rosea-boutique", tags: "Branding, Logo, Identity" }
+            ],
+            education: [
+                { id: "edu1", year: "2018 - sekarang", title: "Siswa", institution: "Sekolah Mutiara Bangsa 2", desc: "Melaksanakan kewajiban sebagai siswa. Mengumpulkan pr tepat waktu" },
+                
+
+    
+                
+
+            ],
+            experience: [
+                { id: "exp1", period: "Sekarang", role: "Siswa SMP kelas 9", company: "Sekolah Mutiara Bangsa 2", desc: "Melaksanakan kewajiban sebagai siswa, bertanggung jawab.", tags: "Figma, Design System, Prototyping" },
+                { id: "exp2", period: "2020 - 2022", role: "Front-End Developer & UI Specialist", company: "Tech Startup Indonesia - Jakarta", desc: "Mengembangkan antarmuka web interaktif menggunakan Tailwind CSS dan React.js, meningkatkan retensi pengguna hingga 25% melalui optimalisasi UI/UX.", tags: "Tailwind CSS, React.js, JavaScript" }
+            ],
+            blog: [
+                { id: "blog1", title: "Penerapan Warna Pastel pada Antarmuka Modern", category: "UI Design", date: "10 Feb 2026", readTime: "4 min baca", image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=600&q=80", snippet: "Rahasia menciptakan kombinasi warna pastel yang estetis tanpa mengorbankan aksesibilitas antarmuka pengguna.", desc: "Penggunaan warna pastel seperti soft pink dan cream dapat menciptakan pengalaman visual yang tenang dan minim kelelahan mata bagi pengguna. Kuncinya terletak pada kontras teks yang tetap terjaga legibilitasnya serta kontras warna tombol aksi yang cukup tebal." },
+                { id: "blog2", title: "Membangun Landing Page Cepat dengan Tailwind CSS", category: "Development", date: "28 Jan 2026", readTime: "5 min baca", image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600&q=80", snippet: "Langkah praktis kustomisasi warna dan komponen fleksibel di Tailwind CSS.", desc: "Tailwind CSS memungkinkan kita mempercepat pembuatan UI dengan class utility yang fleksibel. Artikel ini membahas cara custom palette warna unik langsung dari file konfigurasinya serta membuat komponen glassmorphism dengan gampang." },
+                { id: "blog3", title: "5 Elemen Wajib dalam Portfolio UI/UX yang Menarik", category: "Career", date: "15 Jan 2026", readTime: "3 min baca", image: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&w=600&q=80", snippet: "Kunci membuat studi kasus portfolio desain yang disukai oleh rekruter & klien.", desc: "Portfolio yang memikat tidak hanya menyajikan gambar akhir, tetapi juga menceritakan alur pemikiran, tantangan, dan solusi riset yang Anda terapkan secara jelas. Pastikan melampirkan link prototipe yang dapat dicoba secara langsung." }
+            ],
+            messages: []
+        };
+
+        // Initialize state from LocalStorage or Default
+        window.appState = JSON.parse(localStorage.getItem('chintya_portfolio_state')) || defaultState;
+        window.isAdminLoggedIn = sessionStorage.getItem('chintya_admin_auth') === 'true';
+
+        function updateAppState(newState) {
+            window.appState = newState;
+            localStorage.setItem('chintya_portfolio_state', JSON.stringify(window.appState));
+            if (window.saveStateToCloud) window.saveStateToCloud();
+            renderFrontend();
+            if (window.isAdminLoggedIn) renderAdminCMS();
+        }
+
+        function renderFrontend() {
+            const state = window.appState;
+
+            // Brand & Hero
+            document.getElementById('brand-name-display').innerHTML = `${state.hero.name.split(' ')[0]}<span class="text-pastel-400">.</span>`;
+            document.getElementById('hero-badge').textContent = state.hero.badge;
+            document.getElementById('hero-name').textContent = state.hero.name;
+            document.getElementById('hero-title').textContent = state.hero.title;
+            document.getElementById('hero-bio').textContent = state.hero.bio;
+            document.getElementById('hero-avatar').src = state.hero.avatar;
+            document.getElementById('contact-email-display').textContent = state.hero.email;
+            document.getElementById('contact-phone-display').textContent = state.hero.phone;
+
+            document.getElementById('badge1-title').textContent = state.hero.badge1?.title || "4+ Tahun";
+            document.getElementById('badge1-sub').textContent = state.hero.badge1?.sub || "Pengalaman";
+            document.getElementById('badge2-title').textContent = state.hero.badge2?.title || "50+ Proyek";
+            document.getElementById('badge2-sub').textContent = state.hero.badge2?.sub || "Selesai";
+
+            // Social Links Render
+            const socialLinksHtml = `
+                <a href="${state.socials.instagram}" target="_blank" class="w-9 h-9 rounded-xl bg-white border border-pastel-100 flex items-center justify-center text-pastel-500 hover:bg-pastel-400 hover:text-white transition-all shadow-sm"><i class="fa-brands fa-instagram text-sm"></i></a>
+                <a href="${state.socials.linkedin}" target="_blank" class="w-9 h-9 rounded-xl bg-white border border-pastel-100 flex items-center justify-center text-pastel-500 hover:bg-pastel-400 hover:text-white transition-all shadow-sm"><i class="fa-brands fa-linkedin-in text-sm"></i></a>
+                <a href="${state.socials.github}" target="_blank" class="w-9 h-9 rounded-xl bg-white border border-pastel-100 flex items-center justify-center text-pastel-500 hover:bg-pastel-400 hover:text-white transition-all shadow-sm"><i class="fa-brands fa-github text-sm"></i></a>
+                <a href="${state.socials.dribbble}" target="_blank" class="w-9 h-9 rounded-xl bg-white border border-pastel-100 flex items-center justify-center text-pastel-500 hover:bg-pastel-400 hover:text-white transition-all shadow-sm"><i class="fa-brands fa-dribbble text-sm"></i></a>
+            `;
+            document.getElementById('social-links-container').innerHTML = socialLinksHtml;
+            document.getElementById('footer-socials').innerHTML = socialLinksHtml;
+
+            // Render About Cards
+            document.getElementById('about-cards-container').innerHTML = state.about.map(card => {
+                const formattedDesc = card.desc.split('\n').map(line => `<p class="mb-1">${line}</p>`).join('');
+                return `
+                    <div class="bg-white p-7 rounded-3xl border border-pastel-100 shadow-pastel-card hover:shadow-pastel-hover transition-all duration-300">
+                        <div class="w-12 h-12 rounded-2xl bg-pastel-100 text-pastel-500 flex items-center justify-center text-xl mb-5">
+                            <i class="fa-solid ${card.icon || 'fa-star'}"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-pastel-textDark mb-3">${card.title}</h3>
+                        <div class="text-xs text-pastel-textMuted leading-relaxed">${formattedDesc}</div>
+                    </div>
+                `;
+            }).join('');
+
+            // Render Hobbies Cards
+            document.getElementById('hobbies-cards-container').innerHTML = state.hobbies.map(hob => {
+                const tags = (hob.tags || '').split(',').map(t => `<span class="text-[10px] font-semibold text-pastel-textMuted bg-pastel-50 px-2.5 py-1 rounded-lg">#${t.trim()}</span>`).join(' ');
+                return `
+                    <div class="group bg-white rounded-3xl overflow-hidden border border-pastel-100 shadow-pastel-card hover:shadow-pastel-hover hover:border-pastel-300 transition-all duration-300 hover:-translate-y-2 flex flex-col justify-between">
+                        <div>
+                            <div class="relative overflow-hidden h-48">
+                                <img src="${hob.image}" alt="${hob.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.src='https://placehold.co/800x600/fcccd6/db2777?text=Hobi'">
+                                <div class="absolute top-3 right-3 bg-white/90 backdrop-blur text-pastel-600 w-9 h-9 rounded-xl flex items-center justify-center shadow-sm">
+                                    <i class="fa-solid fa-heart text-sm"></i>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <span class="px-2.5 py-0.5 rounded-full bg-pink-100 text-pastel-600 text-[10px] font-bold">${hob.category || 'Hobi'}</span>
+                                <h3 class="text-base font-bold text-pastel-textDark group-hover:text-pastel-500 transition-colors mt-2 mb-2">${hob.title}</h3>
+                                <p class="text-xs text-pastel-textMuted leading-relaxed">${hob.desc}</p>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6 pt-0 flex flex-wrap gap-1.5">${tags}</div>
+                    </div>
+                `;
+            }).join('');
+
+            // Render Portfolio Cards with Dynamic Links
+            document.getElementById('portfolio-cards-container').innerHTML = state.portfolio.map(port => {
+                return `
+                    <div class="portfolio-item ${port.category} group bg-white rounded-3xl overflow-hidden border border-pastel-100 shadow-pastel-card hover:shadow-pastel-hover transition-all duration-300">
+                        <div class="relative overflow-hidden h-48">
+                            <img src="${port.image}" alt="${port.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.src='https://placehold.co/800x600/fcccd6/db2777?text=Portofolio'">
+                            <div class="absolute inset-0 bg-pastel-600/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
+                                <button onclick="openProjectModal('${port.id}')" class="w-11 h-11 rounded-full bg-white text-pastel-500 flex items-center justify-center shadow-lg hover:scale-110 transition-transform" title="Detail Proyek">
+                                    <i class="fa-solid fa-expand text-sm"></i>
+                                </button>
+                                ${port.link ? `<a href="${port.link}" target="_blank" class="w-11 h-11 rounded-full bg-pastel-500 text-white flex items-center justify-center shadow-lg hover:scale-110 transition-transform" title="Kunjungi Link"><i class="fa-solid fa-arrow-up-right-from-square text-sm"></i></a>` : ''}
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-[10px] font-bold text-pastel-500 uppercase tracking-widest bg-pastel-50 px-2.5 py-1 rounded-md">${port.categoryName || port.category}</span>
+                                ${port.link ? `<a href="${port.link}" target="_blank" class="text-xs text-pastel-400 hover:text-pastel-600 font-semibold flex items-center gap-1">Link <i class="fa-solid fa-link text-[10px]"></i></a>` : ''}
+                            </div>
+                            <h3 class="text-base font-bold text-pastel-textDark mt-1 mb-1 group-hover:text-pastel-500 transition-colors">${port.title}</h3>
+                            <p class="text-xs text-pastel-textMuted line-clamp-2">${port.desc}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Render Education Cards
+            document.getElementById('education-cards-container').innerHTML = state.education.map(edu => {
+                return `
+                    <div class="bg-white p-6 rounded-3xl border border-pastel-100 shadow-pastel-card hover:shadow-pastel-hover transition-all duration-300 relative">
+                        <span class="text-[10px] font-bold text-pastel-500 bg-pastel-50 border border-pastel-100 px-3 py-1 rounded-full inline-block mb-3">${edu.year}</span>
+                        <h3 class="text-base font-bold text-pastel-textDark">${edu.title}</h3>
+                        <p class="text-xs font-semibold text-pastel-500 mt-1">${edu.institution}</p>
+                        <p class="text-xs text-pastel-textMuted mt-3 leading-relaxed">${edu.desc}</p>
+                    </div>
+                `;
+            }).join('');
+
+            // Render Experience Cards
+            document.getElementById('experience-cards-container').innerHTML = state.experience.map(exp => {
+                const tags = (exp.tags || '').split(',').map(t => `<span class="px-3 py-1 bg-pastel-50 text-pastel-600 rounded-xl text-[11px] font-semibold border border-pastel-100">${t.trim()}</span>`).join(' ');
+                return `
+                    <div class="bg-white p-6 sm:p-8 rounded-3xl border border-pastel-100 shadow-pastel-card hover:shadow-pastel-hover transition-all duration-300 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                        <div class="space-y-2 max-w-2xl">
+                            <div class="flex items-center gap-3">
+                                <span class="w-3 h-3 rounded-full bg-pastel-400"></span>
+                                <span class="text-xs font-bold text-pastel-500 uppercase tracking-wider">${exp.period}</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-pastel-textDark">${exp.role}</h3>
+                            <p class="text-xs font-semibold text-pastel-textMuted">${exp.company}</p>
+                            <p class="text-xs text-pastel-textMuted leading-relaxed pt-1">${exp.desc}</p>
+                        </div>
+                        <div class="flex flex-wrap gap-2 md:justify-end">${tags}</div>
+                    </div>
+                `;
+            }).join('');
+
+            // Render Blog Cards
+            document.getElementById('blog-cards-container').innerHTML = state.blog.map(b => {
+                return `
+                    <article class="bg-white rounded-3xl border border-pastel-100 shadow-pastel-card overflow-hidden hover:shadow-pastel-hover transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="h-44 overflow-hidden relative">
+                                <img src="${b.image}" alt="${b.title}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" onerror="this.src='https://placehold.co/600x400/fcccd6/db2777?text=Artikel'">
+                                <span class="absolute top-3 left-3 bg-white/90 backdrop-blur text-pastel-600 text-[10px] font-bold px-2.5 py-1 rounded-md">${b.category}</span>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-center text-[10px] text-pastel-textMuted gap-3 mb-2">
+                                    <span><i class="fa-regular fa-calendar mr-1"></i> ${b.date}</span>
+                                    <span><i class="fa-regular fa-clock mr-1"></i> ${b.readTime}</span>
+                                </div>
+                                <h3 class="text-base font-bold text-pastel-textDark hover:text-pastel-500 transition-colors cursor-pointer" onclick="openBlogModalItem('${b.id}')">
+                                    ${b.title}
+                                </h3>
+                                <p class="text-xs text-pastel-textMuted mt-2 line-clamp-2">${b.snippet || b.desc}</p>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6 pt-0">
+                            <button onclick="openBlogModalItem('${b.id}')" class="text-xs font-bold text-pastel-500 hover:text-pastel-600 flex items-center gap-1.5">
+                                <span>Baca Selengkapnya</span>
+                                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+
+            // Update Auth Button State
+            if (window.isAdminLoggedIn) {
+                document.getElementById('admin-btn-label').textContent = 'Admin CMS';
+                document.getElementById('mobile-admin-label').textContent = 'Admin Dashboard';
+            } else {
+                document.getElementById('admin-btn-label').textContent = 'Login Admin';
+                document.getElementById('mobile-admin-label').textContent = 'Login Admin Backend';
+            }
+        }
+
+        function toggleAdminView() {
+            if (window.isAdminLoggedIn) {
+                renderAdminCMS();
+                openModal('admin-dashboard-modal');
+            } else {
+                openModal('admin-login-modal');
+            }
+        }
+
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const u = document.getElementById('admin-username').value.trim();
+            const p = document.getElementById('admin-password').value.trim();
+
+            if (u === 'ChintyaFK' && p === '01020304') {
+                window.isAdminLoggedIn = true;
+                sessionStorage.setItem('chintya_admin_auth', 'true');
+                closeModal('admin-login-modal');
+                showToast('Login Admin Berhasil! Selamat Datang.');
+                renderAdminCMS();
+                openModal('admin-dashboard-modal');
+                renderFrontend();
+            } else {
+                showToast('Kredensial Salah! ', true);
+            }
+        }
+
+        function handleAdminLogout() {
+            window.isAdminLoggedIn = false;
+            sessionStorage.removeItem('chintya_admin_auth');
+            closeModal('admin-dashboard-modal');
+            showToast('Anda telah keluar dari mode Admin.');
+            renderFrontend();
+        }
+
+        function renderAdminCMS() {
+            const state = window.appState;
+
+            // Load Hero Inputs
+            document.getElementById('cms-hero-name').value = state.hero.name || '';
+            document.getElementById('cms-hero-title').value = state.hero.title || '';
+            document.getElementById('cms-hero-badge').value = state.hero.badge || '';
+            document.getElementById('cms-hero-bio').value = state.hero.bio || '';
+            document.getElementById('cms-hero-avatar').value = state.hero.avatar || '';
+            document.getElementById('cms-hero-email').value = state.hero.email || '';
+
+            document.getElementById('cms-social-instagram').value = state.socials.instagram || '';
+            document.getElementById('cms-social-linkedin').value = state.socials.linkedin || '';
+            document.getElementById('cms-social-github').value = state.socials.github || '';
+            document.getElementById('cms-social-dribbble').value = state.socials.dribbble || '';
+            document.getElementById('cms-social-tiktok').value = state.socials.tiktok || '';
+
+            // Render CMS Lists
+            // Portfolio
+            document.getElementById('cms-portfolio-list').innerHTML = state.portfolio.map(p => `
+                <div class="p-4 bg-stone-950 rounded-2xl border border-stone-800 flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <img src="${p.image}" class="w-12 h-12 object-cover rounded-xl border border-stone-800" onerror="this.src='https://placehold.co/100/fcccd6/db2777?text=Proyek'">
+                        <div>
+                            <h5 class="font-bold text-white">${p.title} <span class="text-[10px] text-amber-400 font-normal">(${p.categoryName || p.category})</span></h5>
+                            <p class="text-[11px] text-amber-300/80 truncate max-w-xs"><i class="fa-solid fa-link text-[10px]"></i> ${p.link || 'Tidak ada link'}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="openPortfolioModal('${p.id}')" class="px-3 py-1.5 bg-stone-800 hover:bg-stone-700 text-amber-400 rounded-xl font-semibold"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button onclick="deleteCMSItem('portfolio', '${p.id}')" class="px-3 py-1.5 bg-rose-950 hover:bg-rose-900 text-rose-400 rounded-xl font-semibold"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Hobbies
+            document.getElementById('cms-hobbies-list').innerHTML = state.hobbies.map(h => `
+                <div class="p-4 bg-stone-950 rounded-2xl border border-stone-800 flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <img src="${h.image}" class="w-12 h-12 object-cover rounded-xl border border-stone-800" onerror="this.src='https://placehold.co/100/fcccd6/db2777?text=Hobi'">
+                        <div>
+                            <h5 class="font-bold text-white">${h.title}</h5>
+                            <p class="text-[11px] text-stone-400 truncate max-w-xs">${h.desc}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="openHobbyModal('${h.id}')" class="px-3 py-1.5 bg-stone-800 hover:bg-stone-700 text-amber-400 rounded-xl font-semibold"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button onclick="deleteCMSItem('hobbies', '${h.id}')" class="px-3 py-1.5 bg-rose-950 hover:bg-rose-900 text-rose-400 rounded-xl font-semibold"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Blog
+            document.getElementById('cms-blog-list').innerHTML = state.blog.map(b => `
+                <div class="p-4 bg-stone-950 rounded-2xl border border-stone-800 flex items-center justify-between gap-4">
+                    <div>
+                        <h5 class="font-bold text-white">${b.title}</h5>
+                        <p class="text-[11px] text-stone-400">${b.category} • ${b.date}</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="openBlogItemModal('${b.id}')" class="px-3 py-1.5 bg-stone-800 hover:bg-stone-700 text-amber-400 rounded-xl font-semibold"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button onclick="deleteCMSItem('blog', '${b.id}')" class="px-3 py-1.5 bg-rose-950 hover:bg-rose-900 text-rose-400 rounded-xl font-semibold"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Experience & Education
+            document.getElementById('cms-experience-list').innerHTML = state.experience.map(e => `
+                <div class="p-3.5 bg-stone-950 rounded-2xl border border-stone-800 flex items-center justify-between">
+                    <div>
+                        <h6 class="font-bold text-white">${e.role} - ${e.company}</h6>
+                        <span class="text-[10px] text-amber-400">${e.period}</span>
+                    </div>
+                    <button onclick="deleteCMSItem('experience', '${e.id}')" class="px-3 py-1 bg-rose-950 text-rose-400 rounded-xl"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            `).join('');
+
+            document.getElementById('cms-education-list').innerHTML = state.education.map(e => `
+                <div class="p-3.5 bg-stone-950 rounded-2xl border border-stone-800 flex items-center justify-between">
+                    <div>
+                        <h6 class="font-bold text-white">${e.title} - ${e.institution}</h6>
+                        <span class="text-[10px] text-amber-400">${e.year}</span>
+                    </div>
+                    <button onclick="deleteCMSItem('education', '${e.id}')" class="px-3 py-1 bg-rose-950 text-rose-400 rounded-xl"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            `).join('');
+
+            // Inbox Messages Count
+            document.getElementById('inbox-count').textContent = state.messages ? state.messages.length : 0;
+            if (!state.messages || state.messages.length === 0) {
+                document.getElementById('cms-inbox-list').innerHTML = `<p class="text-stone-500 py-4 text-center">Belum ada pesan masuk.</p>`;
+            } else {
+                document.getElementById('cms-inbox-list').innerHTML = state.messages.map((m, idx) => `
+                    <div class="p-4 bg-stone-950 rounded-2xl border border-stone-800 space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-white">${m.sender} (${m.email})</span>
+                            <span class="text-[10px] text-stone-500">${m.date || 'Baru'}</span>
+                        </div>
+                        <p class="text-amber-400 font-medium">Subjek: ${m.subject}</p>
+                        <p class="text-stone-300 text-[11px] pt-1">${m.content}</p>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function saveHeroData(e) {
+            e.preventDefault();
+            const state = window.appState;
+            state.hero.name = document.getElementById('cms-hero-name').value;
+            state.hero.title = document.getElementById('cms-hero-title').value;
+            state.hero.badge = document.getElementById('cms-hero-badge').value;
+            state.hero.bio = document.getElementById('cms-hero-bio').value;
+            state.hero.avatar = document.getElementById('cms-hero-avatar').value;
+            state.hero.email = document.getElementById('cms-hero-email').value;
+
+            state.socials.instagram = document.getElementById('cms-social-instagram').value;
+            state.socials.linkedin = document.getElementById('cms-social-linkedin').value;
+            state.socials.github = document.getElementById('cms-social-github').value;
+            state.socials.dribbble = document.getElementById('cms-social-dribbble').value;
+            state.socials.tiktok = document.getElementById('cms-social-tiktok').value;
+
+            updateAppState(state);
+            showToast('Profil & Link Media Sosial berhasil disimpan!');
+        }
+
+        function switchAdminTab(tabName) {
+            document.querySelectorAll('.cms-tab').forEach(t => {
+                t.classList.remove('active', 'bg-amber-500', 'text-stone-950');
+                t.classList.add('bg-stone-800', 'text-stone-300');
+            });
+            document.querySelectorAll('.cms-content').forEach(c => c.classList.add('hidden'));
+
+            const targetBtn = document.querySelector(`.cms-tab[data-tab="${tabName}"]`);
+            if (targetBtn) {
+                targetBtn.classList.add('active', 'bg-amber-500', 'text-stone-950');
+                targetBtn.classList.remove('bg-stone-800', 'text-stone-300');
+            }
+
+            document.getElementById(`cms-tab-${tabName}`).classList.remove('hidden');
+        }
+
+        function deleteCMSItem(collection, id) {
+            const state = window.appState;
+            state[collection] = state[collection].filter(item => item.id !== id);
+            updateAppState(state);
+            showToast('Item berhasil dihapus.');
+        }
+
+        function openPortfolioModal(id = null) {
+            document.getElementById('form-item-type').value = 'portfolio';
+            document.getElementById('form-item-id').value = id || '';
+            document.getElementById('form-field-link').classList.remove('hidden');
+            document.getElementById('form-field-category').classList.remove('hidden');
+            document.getElementById('form-field-image').classList.remove('hidden');
+            document.getElementById('form-field-tags').classList.remove('hidden');
+
+            if (id) {
+                const item = window.appState.portfolio.find(p => p.id === id);
+                document.getElementById('cms-item-modal-title').textContent = 'Edit Kartu Portfolio';
+                document.getElementById('form-item-title').value = item.title;
+                document.getElementById('form-item-category').value = item.categoryName || item.category;
+                document.getElementById('form-item-link').value = item.link || '';
+                document.getElementById('form-item-image').value = item.image || '';
+                document.getElementById('form-item-desc').value = item.desc || '';
+                document.getElementById('form-item-tags').value = item.tags || '';
+            } else {
+                document.getElementById('cms-item-modal-title').textContent = 'Tambah Kartu Portfolio Baru';
+                document.getElementById('cms-item-form').reset();
+            }
+            openModal('cms-item-modal');
+        }
+
+        function openHobbyModal(id = null) {
+            document.getElementById('form-item-type').value = 'hobbies';
+            document.getElementById('form-item-id').value = id || '';
+            document.getElementById('form-field-link').classList.add('hidden');
+            document.getElementById('form-field-category').classList.remove('hidden');
+            document.getElementById('form-field-image').classList.remove('hidden');
+            document.getElementById('form-field-tags').classList.remove('hidden');
+
+            if (id) {
+                const item = window.appState.hobbies.find(h => h.id === id);
+                document.getElementById('cms-item-modal-title').textContent = 'Edit Kartu Hobi';
+                document.getElementById('form-item-title').value = item.title;
+                document.getElementById('form-item-category').value = item.category || '';
+                document.getElementById('form-item-image').value = item.image || '';
+                document.getElementById('form-item-desc').value = item.desc || '';
+                document.getElementById('form-item-tags').value = item.tags || '';
+            } else {
+                document.getElementById('cms-item-modal-title').textContent = 'Tambah Kartu Hobi Baru';
+                document.getElementById('cms-item-form').reset();
+            }
+            openModal('cms-item-modal');
+        }
+
+        function openBlogItemModal(id = null) {
+            document.getElementById('form-item-type').value = 'blog';
+            document.getElementById('form-item-id').value = id || '';
+            document.getElementById('form-field-link').classList.add('hidden');
+            document.getElementById('form-field-category').classList.remove('hidden');
+            document.getElementById('form-field-image').classList.remove('hidden');
+            document.getElementById('form-field-tags').classList.add('hidden');
+
+            if (id) {
+                const item = window.appState.blog.find(b => b.id === id);
+                document.getElementById('cms-item-modal-title').textContent = 'Edit Artikel Blog';
+                document.getElementById('form-item-title').value = item.title;
+                document.getElementById('form-item-category').value = item.category || '';
+                document.getElementById('form-item-image').value = item.image || '';
+                document.getElementById('form-item-desc').value = item.desc || '';
+            } else {
+                document.getElementById('cms-item-modal-title').textContent = 'Tambah Artikel Baru';
+                document.getElementById('cms-item-form').reset();
+            }
+            openModal('cms-item-modal');
+        }
+
+        function openExperienceModal() {
+            const role = prompt("Masukkan Posisi/Role (contoh: Senior Designer):");
+            if (!role) return;
+            const company = prompt("Masukkan Nama Perusahaan/Kota:");
+            const period = prompt("Masukkan Periode (contoh: 2023 - Sekarang):");
+            const desc = prompt("Masukkan Deskripsi Pekerjaan:");
+
+            const newItem = {
+                id: 'exp_' + Date.now(),
+                role, company: company || '', period: period || '2026', desc: desc || '', tags: 'UI/UX, Web'
+            };
+            const state = window.appState;
+            state.experience.unshift(newItem);
+            updateAppState(state);
+            showToast('Pengalaman kerja berhasil ditambahkan!');
+        }
+
+        function openEducationModal() {
+            const title = prompt("Masukkan Gelar/Sertifikat:");
+            if (!title) return;
+            const institution = prompt("Masukkan Institusi:");
+            const year = prompt("Masukkan Tahun:");
+            const desc = prompt("Masukkan Deskripsi Singkat:");
+
+            const newItem = {
+                id: 'edu_' + Date.now(),
+                title, institution: institution || '', year: year || '2026', desc: desc || ''
+            };
+            const state = window.appState;
+            state.education.unshift(newItem);
+            updateAppState(state);
+            showToast('Pendidikan berhasil ditambahkan!');
+        }
+
+        function handleItemFormSave(e) {
+            e.preventDefault();
+            const type = document.getElementById('form-item-type').value;
+            const id = document.getElementById('form-item-id').value;
+            const title = document.getElementById('form-item-title').value;
+            const category = document.getElementById('form-item-category').value;
+            const link = document.getElementById('form-item-link').value;
+            const image = document.getElementById('form-item-image').value;
+            const desc = document.getElementById('form-item-desc').value;
+            const tags = document.getElementById('form-item-tags').value;
+
+            const state = window.appState;
+
+            if (type === 'portfolio') {
+                const catSlug = category.toLowerCase().includes('web') ? 'web' : (category.toLowerCase().includes('brand') ? 'branding' : 'uiux');
+                const newItem = {
+                    id: id || ('port_' + Date.now()),
+                    title,
+                    category: catSlug,
+                    categoryName: category || 'UI/UX Design',
+                    image: image || 'https://placehold.co/800x600/fcccd6/db2777?text=Proyek',
+                    desc,
+                    link: link || '#',
+                    tags: tags || 'Design'
+                };
+                if (id) {
+                    const idx = state.portfolio.findIndex(p => p.id === id);
+                    if (idx !== -1) state.portfolio[idx] = newItem;
+                } else {
+                    state.portfolio.unshift(newItem);
+                }
+            } else if (type === 'hobbies') {
+                const newItem = {
+                    id: id || ('hob_' + Date.now()),
+                    title,
+                    category: category || 'Hobi',
+                    image: image || 'https://placehold.co/800x600/fcccd6/db2777?text=Hobi',
+                    desc,
+                    tags: tags || 'Hobi'
+                };
+                if (id) {
+                    const idx = state.hobbies.findIndex(h => h.id === id);
+                    if (idx !== -1) state.hobbies[idx] = newItem;
+                } else {
+                    state.hobbies.unshift(newItem);
+                }
+            } else if (type === 'blog') {
+                const newItem = {
+                    id: id || ('blog_' + Date.now()),
+                    title,
+                    category: category || 'Artikel',
+                    date: 'Hari ini',
+                    readTime: '3 min baca',
+                    image: image || 'https://placehold.co/600x400/fcccd6/db2777?text=Artikel',
+                    snippet: desc.substring(0, 90) + '...',
+                    desc
+                };
+                if (id) {
+                    const idx = state.blog.findIndex(b => b.id === id);
+                    if (idx !== -1) state.blog[idx] = newItem;
+                } else {
+                    state.blog.unshift(newItem);
+                }
+            }
+
+            updateAppState(state);
+            closeModal('cms-item-modal');
+            showToast('Data berhasil diperbarui ✨');
+        }
+
+        function resetDataToDefault() {
+            if (sessionStorage.getItem('chintya_admin_auth') === 'true') {
+                updateAppState(JSON.parse(JSON.stringify(defaultState)));
+                showToast('Seluruh data berhasil dikembalikan ke standar awal!');
+            }
+        }
+
+        function openModal(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.classList.remove('opacity-0', 'pointer-events-none');
+            }
+        }
+
+        function closeModal(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.classList.add('opacity-0', 'pointer-events-none');
+            }
+        }
+
+        function openProjectModal(id) {
+            const port = window.appState.portfolio.find(p => p.id === id);
+            if (!port) return;
+
+            document.getElementById('modal-title').textContent = port.title;
+            document.getElementById('modal-desc').textContent = port.desc;
+            document.getElementById('modal-img').src = port.image;
+            document.getElementById('modal-category').textContent = port.categoryName || port.category;
+
+            const linkBtn = document.getElementById('modal-link-btn');
+            if (port.link && port.link !== '#') {
+                linkBtn.href = port.link;
+                linkBtn.style.display = 'inline-flex';
+            } else {
+                linkBtn.style.display = 'none';
+            }
+
+            openModal('project-modal');
+        }
+
+        function openBlogModalItem(id) {
+            const blog = window.appState.blog.find(b => b.id === id);
+            if (!blog) return;
+
+            document.getElementById('blog-modal-title').textContent = blog.title;
+            document.getElementById('blog-modal-cat').textContent = `${blog.category} • ${blog.date}`;
+            document.getElementById('blog-modal-desc').innerHTML = `<p>${blog.desc}</p>`;
+
+            openModal('blog-modal');
+        }
+
+        function filterPortfolio(filter) {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if (btn.getAttribute('data-filter') === filter) {
+                    btn.classList.add('active', 'bg-pastel-500', 'text-white', 'shadow-pastel-glow');
+                    btn.classList.remove('bg-white', 'text-pastel-textMuted');
+                } else {
+                    btn.classList.remove('active', 'bg-pastel-500', 'text-white', 'shadow-pastel-glow');
+                    btn.classList.add('bg-white', 'text-pastel-textMuted');
+                }
+            });
+
+            document.querySelectorAll('.portfolio-item').forEach(item => {
+                if (filter === 'all' || item.classList.contains(filter)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const sender = document.getElementById('msg-sender').value;
+            const email = document.getElementById('msg-email').value;
+            const subject = document.getElementById('msg-subject').value;
+            const content = document.getElementById('msg-content').value;
+
+            const newMessage = {
+                id: 'msg_' + Date.now(),
+                sender, email, subject, content,
+                date: new Date().toLocaleDateString('id-ID')
+            };
+
+            const state = window.appState;
+            if (!state.messages) state.messages = [];
+            state.messages.unshift(newMessage);
+            updateAppState(state);
+
+            document.getElementById('contact-form').reset();
+            showToast('Terima kasih! Pesan Anda telah berhasil dikirim ✨');
+        }
+
+        function copyToClipboard(text) {
+            const tempInput = document.createElement('input');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            showToast('Email ' + text + ' telah disalin!');
+        }
+
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-msg');
+            const toastIcon = document.getElementById('toast-icon');
+
+            toastMsg.textContent = message;
+            if (isError) {
+                toastIcon.className = 'fa-solid fa-triangle-exclamation text-rose-400';
+            } else {
+                toastIcon.className = 'fa-solid fa-circle-check text-amber-400';
+            }
+
+            toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+            toast.classList.add('opacity-100', 'translate-y-0');
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+                toast.classList.remove('opacity-100', 'translate-y-0');
+            }, 3500);
+        }
+
+        // Header Transformation on Scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 25) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu Listener
+        document.getElementById('menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Initialize Render
+        renderFrontend();
+    </script>
+</body>
+</html>
