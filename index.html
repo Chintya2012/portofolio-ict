@@ -535,6 +535,10 @@
                     <i class="fa-solid fa-user-gear"></i>
                     <span>Profil & Hero</span>
                 </button>
+                <button onclick="switchAdminTab('about')" class="cms-tab px-4 py-2 rounded-xl bg-stone-800 text-stone-300 hover:bg-stone-700 transition-all flex items-center gap-2 whitespace-nowrap" data-tab="about">
+                    <i class="fa-solid fa-address-card"></i>
+                    <span>Tentang Saya</span>
+                </button>
                 <button onclick="switchAdminTab('portfolio')" class="cms-tab px-4 py-2 rounded-xl bg-stone-800 text-stone-300 hover:bg-stone-700 transition-all flex items-center gap-2 whitespace-nowrap" data-tab="portfolio">
                     <i class="fa-solid fa-briefcase"></i>
                     <span>Portfolio Proyek</span>
@@ -626,6 +630,22 @@
                             <span>Simpan Perubahan Profil</span>
                         </button>
                     </form>
+                </div>
+
+                <!-- Tab: About CMS Manager -->
+                <div id="cms-tab-about" class="cms-content hidden space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h4 class="text-sm font-bold text-amber-400">Daftar Kartu Informasi "Tentang Saya"</h4>
+                            <p class="text-[11px] text-stone-400 mt-0.5">Kelola isi teks kartu biodata, profil, dan informasi Tentang Saya</p>
+                        </div>
+                        <button onclick="openAboutModal()" class="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold rounded-xl text-xs flex items-center gap-2">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Tambah Kartu Tentang Saya</span>
+                        </button>
+                    </div>
+
+                    <div id="cms-about-list" class="space-y-3"></div>
                 </div>
 
                 <!-- Tab 2: Portfolio CMS Manager -->
@@ -761,66 +781,64 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
+        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Global Firebase state reference
-        window.firebaseApp = null;
-        window.firebaseDb = null;
-        window.firebaseAuth = null;
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBQam8SBK8NHCcSYo_prkqqadKTaw7JUbY",
+            authDomain: "portofolio-ict-aa57f.firebaseapp.com",
+            projectId: "portofolio-ict-aa57f",
+            storageBucket: "portofolio-ict-aa57f.firebasestorage.app",
+            messagingSenderId: "466533786661",
+            appId: "1:466533786661:web:af86048d94910daa30cbcc",
+            measurementId: "G-226YZV9CWR"
+        };
 
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'chintya-portfolio-app';
-
-        async function initFirebaseSync() {
-            try {
-                if (typeof __firebase_config !== 'undefined') {
-                    const firebaseConfig = JSON.parse(__firebase_config);
-                    window.firebaseApp = initializeApp(firebaseConfig);
-                    window.firebaseDb = getFirestore(window.firebaseApp);
-                    window.firebaseAuth = getAuth(window.firebaseApp);
-
-                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                        await signInWithCustomToken(window.firebaseAuth, __initial_auth_token);
-                    } else {
-                        await signInAnonymously(window.firebaseAuth);
-                    }
-
-                    // Listen to live database updates
-                    const docRef = doc(window.firebaseDb, 'artifacts', appId, 'public', 'data', 'portfolio_data', 'chintya');
-                    onSnapshot(docRef, (snapshot) => {
-                        if (snapshot.exists()) {
-                            const data = snapshot.data();
-                            if (data && data.state) {
-                                window.appState = data.state;
-                                renderFrontend();
-                                if (window.isAdminLoggedIn) renderAdminCMS();
-                            }
-                        } else {
-                            // Seed initial state if document doesn't exist
-                            saveStateToCloud();
-                        }
-                    }, (err) => {
-                        console.log('Firestore snapshot fallback:', err);
-                    });
-                }
-            } catch (err) {
-                console.log('Running in local state mode:', err);
-            }
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        try {
+            getAnalytics(app);
+        } catch (e) {
+            console.log("Analytics not available:", e);
         }
 
-        window.saveStateToCloud = async function() {
-            if (window.firebaseDb) {
-                try {
-                    const docRef = doc(window.firebaseDb, 'artifacts', appId, 'public', 'data', 'portfolio_data', 'chintya');
-                    await setDoc(docRef, { state: window.appState });
-                } catch (e) {
-                    console.error('Error saving state to Firestore:', e);
-                }
+        const db = getFirestore(app);
+        const docRef = doc(db, 'portfolio_data', 'chintya');
+
+        window.firebaseApp = app;
+        window.firebaseDb = db;
+
+        // Function to save state directly to Firestore
+        window.saveStateToCloud = async function(stateToSave) {
+            try {
+                const data = stateToSave || window.appState;
+                await setDoc(docRef, { state: data });
+                return true;
+            } catch (err) {
+                console.error("Gagal menyimpan ke Firestore:", err);
+                showToast("Gagal menyimpan ke cloud: " + (err.message || err), true);
+                return false;
             }
         };
 
-        window.addEventListener('DOMContentLoaded', () => {
-            initFirebaseSync();
+        // Real-time listener: loads initial data from Firestore and syncs live updates
+        onSnapshot(docRef, (snapshot) => {
+            if (snapshot.exists()) {
+                const data = snapshot.data();
+                if (data && data.state) {
+                    window.appState = data.state;
+                    if (typeof renderFrontend === 'function') renderFrontend();
+                    if (window.isAdminLoggedIn && typeof renderAdminCMS === 'function') renderAdminCMS();
+                }
+            } else {
+                // Seed initial state into Firestore if document doesn't exist yet
+                if (window.defaultState) {
+                    window.saveStateToCloud(window.defaultState);
+                }
+            }
+        }, (err) => {
+            console.error("Firestore onSnapshot error:", err);
         });
     </script>
 
@@ -879,15 +897,17 @@
             ],
             messages: []
         };
+        window.defaultState = defaultState;
 
-        // Initialize state from LocalStorage or Default
-        window.appState = JSON.parse(localStorage.getItem('chintya_portfolio_state')) || defaultState;
+        // Initialize state (starts with default, dynamically updated by Firestore snapshot)
+        window.appState = JSON.parse(JSON.stringify(defaultState));
         window.isAdminLoggedIn = sessionStorage.getItem('chintya_admin_auth') === 'true';
 
         function updateAppState(newState) {
             window.appState = newState;
-            localStorage.setItem('chintya_portfolio_state', JSON.stringify(window.appState));
-            if (window.saveStateToCloud) window.saveStateToCloud();
+            if (window.saveStateToCloud) {
+                window.saveStateToCloud(window.appState);
+            }
             renderFrontend();
             if (window.isAdminLoggedIn) renderAdminCMS();
         }
@@ -1106,6 +1126,26 @@
             document.getElementById('cms-social-tiktok').value = state.socials.tiktok || '';
 
             // Render CMS Lists
+            // About
+            if (!state.about) state.about = [];
+            document.getElementById('cms-about-list').innerHTML = state.about.map(a => `
+                <div class="p-4 bg-stone-950 rounded-2xl border border-stone-800 flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3 min-w-0">
+                        <div class="w-10 h-10 rounded-xl bg-stone-800 text-amber-400 flex items-center justify-center text-base flex-shrink-0">
+                            <i class="fa-solid ${a.icon || 'fa-star'}"></i>
+                        </div>
+                        <div class="min-w-0">
+                            <h5 class="font-bold text-white">${a.title}</h5>
+                            <p class="text-[11px] text-stone-400 truncate max-w-xs sm:max-w-md">${(a.desc || '').replace(/\n/g, ' ')}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 flex-shrink-0">
+                        <button onclick="openAboutModal('${a.id}')" class="px-3 py-1.5 bg-stone-800 hover:bg-stone-700 text-amber-400 rounded-xl font-semibold" title="Edit Kartu"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button onclick="deleteCMSItem('about', '${a.id}')" class="px-3 py-1.5 bg-rose-950 hover:bg-rose-900 text-rose-400 rounded-xl font-semibold" title="Hapus Kartu"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </div>
+            `).join('');
+
             // Portfolio
             document.getElementById('cms-portfolio-list').innerHTML = state.portfolio.map(p => `
                 <div class="p-4 bg-stone-950 rounded-2xl border border-stone-800 flex items-center justify-between gap-4">
@@ -1236,6 +1276,31 @@
             showToast('Item berhasil dihapus.');
         }
 
+        function openAboutModal(id = null) {
+            document.getElementById('form-item-type').value = 'about';
+            document.getElementById('form-item-id').value = id || '';
+            document.getElementById('form-field-link').classList.add('hidden');
+            document.getElementById('form-field-category').classList.remove('hidden');
+            document.getElementById('form-field-image').classList.add('hidden');
+            document.getElementById('form-field-tags').classList.add('hidden');
+
+            const catLabel = document.getElementById('form-field-category').querySelector('label');
+            if (catLabel) catLabel.textContent = 'Icon FontAwesome (contoh: fa-user-astronaut, fa-id-card, fa-wand-magic-sparkles, fa-star)';
+
+            if (id) {
+                const item = (window.appState.about || []).find(a => a.id === id);
+                document.getElementById('cms-item-modal-title').textContent = 'Edit Kartu Tentang Saya';
+                document.getElementById('form-item-title').value = item ? item.title : '';
+                document.getElementById('form-item-category').value = item ? (item.icon || 'fa-star') : 'fa-star';
+                document.getElementById('form-item-desc').value = item ? item.desc : '';
+            } else {
+                document.getElementById('cms-item-modal-title').textContent = 'Tambah Kartu Tentang Saya';
+                document.getElementById('cms-item-form').reset();
+                document.getElementById('form-item-category').value = 'fa-star';
+            }
+            openModal('cms-item-modal');
+        }
+
         function openPortfolioModal(id = null) {
             document.getElementById('form-item-type').value = 'portfolio';
             document.getElementById('form-item-id').value = id || '';
@@ -1243,6 +1308,9 @@
             document.getElementById('form-field-category').classList.remove('hidden');
             document.getElementById('form-field-image').classList.remove('hidden');
             document.getElementById('form-field-tags').classList.remove('hidden');
+
+            const catLabel = document.getElementById('form-field-category').querySelector('label');
+            if (catLabel) catLabel.textContent = 'Kategori / Sub-judul';
 
             if (id) {
                 const item = window.appState.portfolio.find(p => p.id === id);
@@ -1268,6 +1336,9 @@
             document.getElementById('form-field-image').classList.remove('hidden');
             document.getElementById('form-field-tags').classList.remove('hidden');
 
+            const catLabel = document.getElementById('form-field-category').querySelector('label');
+            if (catLabel) catLabel.textContent = 'Kategori / Sub-judul';
+
             if (id) {
                 const item = window.appState.hobbies.find(h => h.id === id);
                 document.getElementById('cms-item-modal-title').textContent = 'Edit Kartu Hobi';
@@ -1290,6 +1361,9 @@
             document.getElementById('form-field-category').classList.remove('hidden');
             document.getElementById('form-field-image').classList.remove('hidden');
             document.getElementById('form-field-tags').classList.add('hidden');
+
+            const catLabel = document.getElementById('form-field-category').querySelector('label');
+            if (catLabel) catLabel.textContent = 'Kategori / Sub-judul';
 
             if (id) {
                 const item = window.appState.blog.find(b => b.id === id);
@@ -1352,7 +1426,21 @@
 
             const state = window.appState;
 
-            if (type === 'portfolio') {
+            if (type === 'about') {
+                const newItem = {
+                    id: id || ('ab_' + Date.now()),
+                    title,
+                    icon: category || 'fa-star',
+                    desc
+                };
+                if (!state.about) state.about = [];
+                if (id) {
+                    const idx = state.about.findIndex(a => a.id === id);
+                    if (idx !== -1) state.about[idx] = newItem;
+                } else {
+                    state.about.push(newItem);
+                }
+            } else if (type === 'portfolio') {
                 const catSlug = category.toLowerCase().includes('web') ? 'web' : (category.toLowerCase().includes('brand') ? 'branding' : 'uiux');
                 const newItem = {
                     id: id || ('port_' + Date.now()),
